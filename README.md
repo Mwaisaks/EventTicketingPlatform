@@ -91,7 +91,11 @@ https://www.youtube.com/watch?v=Rl5pZ7Cncyk
 - Design REST API endpoints for the Event Staff.
 - Design REST API endpoints for the Event Attendees.
 
+## Part 3: Setting Up
+static and template directories under the resource folder have been deleted.
+We don't need them, used when doing server side rendering of our html pages
 
+.mvn folder, mvnw(shellscript) and mvnw.cmd make up the maven wrapper which enable us to run maven without installing it.
 
 ### Advanced Features
 * Integrate a payment System
@@ -101,4 +105,5 @@ https://www.youtube.com/watch?v=Rl5pZ7Cncyk
 * Sign up page
 * Venue as it's own entity?
 * Start and end date to be repetitive, open at __ and close at __
+* Adjust docker-compose.yml and application.properties to prod standards
 
