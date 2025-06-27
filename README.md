@@ -35,12 +35,6 @@ Organizers, Attendees, Staff. What their primary goal is, their main challenge a
 ### TODO
 Try creating UI design using AI
 
-### Advanced Features
-* Integrate a payment System
-* Deploy on azure or AWS
-* Emails
-* Chatbot
-
 ### UI/UX with AI
 
 Tool - UX Pilot, ChatGPT
@@ -90,4 +84,21 @@ Open a new figma deisgn file, open UX pilot plugin, add it to your design canvas
 
 https://www.youtube.com/watch?v=Rl5pZ7Cncyk
 
+
+## Part 2: Rest API Design
+
+- Design REST API endpoints for the Event Organiser.
+- Design REST API endpoints for the Event Staff.
+- Design REST API endpoints for the Event Attendees.
+
+
+
+### Advanced Features
+* Integrate a payment System
+* Deploy on azure or AWS
+* Emails
+* Chatbot
+* Sign up page
+* Venue as it's own entity?
+* Start and end date to be repetitive, open at __ and close at __
 
