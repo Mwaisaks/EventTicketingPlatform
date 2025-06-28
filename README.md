@@ -97,6 +97,26 @@ We don't need them, used when doing server side rendering of our html pages
 
 .mvn folder, mvnw(shellscript) and mvnw.cmd make up the maven wrapper which enable us to run maven without installing it.
 
+### Running KeyCloak
+* In docker environment- easiest way
+* Add configurations in the docker-compose.yml file
+* run docker-compose up.
+* head over to localhost:9090, and log in
+* Initial configurations - create a realm
+* create a client (rep the FE)
+* Client authentication set to off to prevent public access
+* Create Users
+* Configure Springboot to keycloak; in the application.properties file
+
+Is this what's used when you're in a system where you don't sign up, just log in with a preset password and then reset it?
+
+### Configuring MapStruct
+In your pom.xml file specify the versions for mapstruct and lombok in teh properties section
+mapstruct version 1.6.3 goes well with lombok version 1.18.36
+in the maven compiler plugin add the three plugins in the order of lombok, processor and lombok-Mapstruct binding.
+
+
+
 ### Advanced Features
 * Integrate a payment System
 * Deploy on azure or AWS
