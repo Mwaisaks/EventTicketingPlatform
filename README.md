@@ -116,6 +116,9 @@ mapstruct version 1.6.3 goes well with lombok version 1.18.36
 in the maven compiler plugin add the three plugins in the order of lombok, processor and lombok-Mapstruct binding.
 
 
+## Part 4
+* Create Enums
+
 
 ### Advanced Features
 * Integrate a payment System
