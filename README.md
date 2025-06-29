@@ -118,6 +118,11 @@ in the maven compiler plugin add the three plugins in the order of lombok, proce
 
 ## Part 4
 * Create Enums
+* For the User Entity
+option 1:
+* have an abstract User class with various sub-classes - polymorphism (more complicated)
+option 2:
+* have different roles for these three user types and have one User entity
 
 
 ### Advanced Features
@@ -129,4 +134,5 @@ in the maven compiler plugin add the three plugins in the order of lombok, proce
 * Venue as it's own entity?
 * Start and end date to be repetitive, open at __ and close at __
 * Adjust docker-compose.yml and application.properties to prod standards
+* Soft Delete functionality; User deleted, events remain..
 
