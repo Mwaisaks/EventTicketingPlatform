@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+//@Builder removed because it requires additional annotations at instance variables where we've initialised collections, also because of the audit fields
 public class User {
 
     @Id

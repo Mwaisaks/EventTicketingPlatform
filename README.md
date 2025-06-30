@@ -135,4 +135,6 @@ option 2:
 * Start and end date to be repetitive, open at __ and close at __
 * Adjust docker-compose.yml and application.properties to prod standards
 * Soft Delete functionality; User deleted, events remain..
+* CSRF implementation
+* 
 
