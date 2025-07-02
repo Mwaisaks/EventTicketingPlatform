@@ -124,6 +124,15 @@ option 1:
 option 2:
 * have different roles for these three user types and have one User entity
 
+## Part 6: Create Event
+CreateEventRequest.java is to be used in the service layer, the CreateEventRequestDto.java - repository layer.
+
+Changes in either of the classes shouldn't affect the other one, we want them decoupled.
+
+In the same project, I'm implementing the Create Event endpoint, I've createsd Dtos for the presentation layer
+
+Below is the code for my CreateEventRequestDto class and my Event class. We've added validations in the dto and we still have 'validations' in the event ticket class, why's that? What's the difference between @NotNull, @NotEmpty and @Not Blank?
+
 
 ### Advanced Features
 * Integrate a payment System
@@ -136,5 +145,5 @@ option 2:
 * Adjust docker-compose.yml and application.properties to prod standards
 * Soft Delete functionality; User deleted, events remain..
 * CSRF implementation
-* 
+* Make sure the end date is after the first date
 

@@ -56,7 +56,7 @@ public class Event {
     private List<User> attendees = new ArrayList<>(); //Initialized to an arraylist to prevent null pointer exception
 
     @ManyToMany(mappedBy = "staffing_events")
-    private List<User> staff;
+    private List<User> staff = new ArrayList<>();
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<TicketType> ticketTypes = new ArrayList<>();
