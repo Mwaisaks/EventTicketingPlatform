@@ -3,7 +3,7 @@ package com.devtiro.EventTicketingPlatform.service.impl;
 import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.domain.entity.TicketType;
 import com.devtiro.EventTicketingPlatform.domain.entity.User;
-import com.devtiro.EventTicketingPlatform.domain.request.CreateEventRequest;
+import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequest;
 import com.devtiro.EventTicketingPlatform.repository.EventRepository;
 import com.devtiro.EventTicketingPlatform.repository.UserRepository;
 import com.devtiro.EventTicketingPlatform.service.EventService;

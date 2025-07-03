@@ -1,6 +1,5 @@
-package com.devtiro.EventTicketingPlatform.domain.request;
+package com.devtiro.EventTicketingPlatform.domain.dto.request;
 
-import com.devtiro.EventTicketingPlatform.domain.entity.User;
 import com.devtiro.EventTicketingPlatform.domain.enums.EventStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;

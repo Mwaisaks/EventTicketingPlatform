@@ -1,4 +1,4 @@
-package com.devtiro.EventTicketingPlatform.domain.request;
+package com.devtiro.EventTicketingPlatform.domain.dto.request;
 
 import com.devtiro.EventTicketingPlatform.domain.enums.EventStatusEnum;
 import jakarta.validation.Valid;

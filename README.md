@@ -133,7 +133,13 @@ In the same project, I'm implementing the Create Event endpoint, I've createsd D
 
 Below is the code for my CreateEventRequestDto class and my Event class. We've added validations in the dto and we still have 'validations' in the event ticket class, why's that? What's the difference between @NotNull, @NotEmpty and @Not Blank?
 
+**Using Mapstruct Guide**
 
+* Add Maven Dependencies
+* Have your classes
+* Create your mapper interface under mapper package
+-Annotate the class with @Mapper to mark it as a mapping interface
+* 
 ### Advanced Features
 * Integrate a payment System
 * Deploy on azure or AWS
@@ -146,4 +152,6 @@ Below is the code for my CreateEventRequestDto class and my Event class. We've a
 * Soft Delete functionality; User deleted, events remain..
 * CSRF implementation
 * Make sure the end date is after the first date
+* Allow the user to specify other users as organisers
+* Add other exceptions
 

@@ -1,4 +1,4 @@
-package com.devtiro.EventTicketingPlatform.domain.request;
+package com.devtiro.EventTicketingPlatform.domain.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
