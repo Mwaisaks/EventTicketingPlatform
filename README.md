@@ -98,14 +98,14 @@ We don't need them, used when doing server side rendering of our html pages
 .mvn folder, mvnw(shellscript) and mvnw.cmd make up the maven wrapper which enable us to run maven without installing it.
 
 ### Running KeyCloak
-* In docker environment- easiest way
+* In docker environment- easiest way for local development
 * Add configurations in the docker-compose.yml file
 * run docker-compose up.
 * head over to localhost:9090, and log in
-* Initial configurations - create a realm
+* Initial configurations - create a realm 9name it your app's name)
 * create a client (rep the FE)
 * Client authentication set to off to prevent public access
-* Create Users
+* Create Users, set the passowrd in the credentials tab
 * Configure Springboot to keycloak; in the application.properties file
 
 Is this what's used when you're in a system where you don't sign up, just log in with a preset password and then reset it?
@@ -139,7 +139,16 @@ Below is the code for my CreateEventRequestDto class and my Event class. We've a
 * Have your classes
 * Create your mapper interface under mapper package
 -Annotate the class with @Mapper to mark it as a mapping interface
-* 
+
+
+### Part 7
+
+**Pagination**
+return a Page instead of a list
+
+#### Consistency is key in any codebase
+
+
 ### Advanced Features
 * Integrate a payment System
 * Deploy on azure or AWS
@@ -154,4 +163,11 @@ Below is the code for my CreateEventRequestDto class and my Event class. We've a
 * Make sure the end date is after the first date
 * Allow the user to specify other users as organisers
 * Add other exceptions
+* When the Organiser can be an attendee, staff for other events and vice versa
+
+**Implementing an Endpoint**
+* Implement the service layer
+* Create DTOs and mappers
+* controller layer
+* test functionality
 
