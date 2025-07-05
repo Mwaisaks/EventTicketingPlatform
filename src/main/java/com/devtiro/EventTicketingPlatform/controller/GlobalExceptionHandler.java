@@ -1,6 +1,7 @@
 package com.devtiro.EventTicketingPlatform.controller;
 
 import com.devtiro.EventTicketingPlatform.domain.dto.ErrorResponseDto;
+import com.devtiro.EventTicketingPlatform.exceptions.EventNotFoundException;
 import com.devtiro.EventTicketingPlatform.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -100,6 +101,25 @@ public class GlobalExceptionHandler {
                 .errorCode(ex.getErrorCode())
                 .path(extractPath(request))
                 .details(Map.of("suggestedAction", "Register"))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleEventNotFoundException(
+            EventNotFoundException ex, WebRequest request){
+
+        log.error("Event not found: {}", ex.getMessage());
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error("Event Not Found")
+                .message(ex.getMessage())
+                .errorCode(ex.getErrorCode())
+                .path(extractPath(request))
+                .details(Map.of("suggestedAction", "Go to Home Page"))
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);

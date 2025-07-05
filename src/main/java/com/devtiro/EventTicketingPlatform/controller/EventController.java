@@ -3,6 +3,7 @@ package com.devtiro.EventTicketingPlatform.controller;
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequest;
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequestDto;
 import com.devtiro.EventTicketingPlatform.domain.dto.response.CreateEventResponseDto;
+import com.devtiro.EventTicketingPlatform.domain.dto.response.GetEventDetailsResponseDto;
 import com.devtiro.EventTicketingPlatform.domain.dto.response.ListEventResponseDto;
 import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.mappers.EventMapper;
@@ -51,6 +52,18 @@ public class EventController {
         return ResponseEntity.ok(
                 events.map(eventMapper::toListEventResponseDto)
         );
+    }
+
+    @GetMapping(path = "/{eventId}")
+    public ResponseEntity<GetEventDetailsResponseDto> getEvent(
+            @AuthenticationPrincipal Jwt jwt, @PathVariable UUID eventId
+    ){
+        UUID userId = parseUserId(jwt);
+
+        return eventService.getEventForOrganizer(userId, eventId)
+                .map(eventMapper::toGetEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     private UUID parseUserId(Jwt jwt){

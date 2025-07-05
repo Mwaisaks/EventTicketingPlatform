@@ -5,8 +5,11 @@ import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequestD
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateTicketTypeRequest;
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateTicketTypeRequestDto;
 import com.devtiro.EventTicketingPlatform.domain.dto.response.CreateEventResponseDto;
+import com.devtiro.EventTicketingPlatform.domain.dto.response.GetEventDetailsResponseDto;
+import com.devtiro.EventTicketingPlatform.domain.dto.response.GetEventDetailsTicketTypesResponseDto;
 import com.devtiro.EventTicketingPlatform.domain.dto.response.ListEventResponseDto;
 import com.devtiro.EventTicketingPlatform.domain.entity.Event;
+import com.devtiro.EventTicketingPlatform.domain.entity.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -22,4 +25,8 @@ public interface EventMapper {
     ListEventResponseDto toListEventResponseDto (Event event);
 
     Event fromListEventResponseDto (ListEventResponseDto listEventResponseDto);
+
+    GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto (TicketType ticketType);
+
+    GetEventDetailsResponseDto toGetEventDetailsResponseDto (Event event);
 }

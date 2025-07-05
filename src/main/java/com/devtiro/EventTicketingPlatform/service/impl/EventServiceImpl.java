@@ -4,9 +4,11 @@ import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.domain.entity.TicketType;
 import com.devtiro.EventTicketingPlatform.domain.entity.User;
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequest;
+import com.devtiro.EventTicketingPlatform.exceptions.EventNotFoundException;
 import com.devtiro.EventTicketingPlatform.repository.EventRepository;
 import com.devtiro.EventTicketingPlatform.repository.UserRepository;
 import com.devtiro.EventTicketingPlatform.service.EventService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -62,5 +65,23 @@ public class EventServiceImpl implements EventService {
     public Page<Event> listEventsForOrganizer(UUID organizerId, Pageable pageable) {
         return eventRepository.findByOrganizerId(organizerId, pageable);
     }
+
+    @Override
+    public Optional<Event> getEventForOrganizer(UUID organizerId, UUID id) {
+        return eventRepository.findByIdAndOrganizerId(id, organizerId);
+    }
+
+    /*
+    @Override
+    public Event getEventForOrganizer(UUID eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoundException(
+                        String.format("Event with Id '%s' not found", eventId))
+                );
+
+        return event;
+    }
+
+     */
 
 }
