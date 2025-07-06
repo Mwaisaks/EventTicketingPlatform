@@ -1,13 +1,7 @@
 package com.devtiro.EventTicketingPlatform.mappers;
 
-import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequest;
-import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequestDto;
-import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateTicketTypeRequest;
-import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateTicketTypeRequestDto;
-import com.devtiro.EventTicketingPlatform.domain.dto.response.CreateEventResponseDto;
-import com.devtiro.EventTicketingPlatform.domain.dto.response.GetEventDetailsResponseDto;
-import com.devtiro.EventTicketingPlatform.domain.dto.response.GetEventDetailsTicketTypesResponseDto;
-import com.devtiro.EventTicketingPlatform.domain.dto.response.ListEventResponseDto;
+import com.devtiro.EventTicketingPlatform.domain.dto.request.*;
+import com.devtiro.EventTicketingPlatform.domain.dto.response.*;
 import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.domain.entity.TicketType;
 import org.mapstruct.Mapper;
@@ -29,4 +23,12 @@ public interface EventMapper {
     GetEventDetailsTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto (TicketType ticketType);
 
     GetEventDetailsResponseDto toGetEventDetailsResponseDto (Event event);
+
+    UpdateEventRequest fromDto (UpdateEventRequestDto dto);
+
+    UpdateTicketTypeRequest fromDto (UpdateTicketTypeRequestDto dto);
+
+    UpdateEventResponseDto toUpdateEventResponseDto (Event event);
+
+    UpdateTicketTypeResponseDto toUpdateTicketTypeResponseDto (TicketType ticketType);
 }

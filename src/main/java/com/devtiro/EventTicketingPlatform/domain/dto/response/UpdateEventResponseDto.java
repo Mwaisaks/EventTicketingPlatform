@@ -1,4 +1,4 @@
-package com.devtiro.EventTicketingPlatform.domain.dto.request;
+package com.devtiro.EventTicketingPlatform.domain.dto.response;
 
 import com.devtiro.EventTicketingPlatform.domain.enums.EventStatusEnum;
 import lombok.AllArgsConstructor;
@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateEventRequest {
+public class UpdateEventResponseDto {
 
     private UUID id;
     private String name;
@@ -23,5 +22,8 @@ public class UpdateEventRequest {
     private LocalDateTime salesStart;
     private LocalDateTime salesEnd;
     private EventStatusEnum status;
-    private List<UpdateTicketTypeRequest> ticketTypes = new ArrayList<>();
+    private List<UpdateTicketTypeResponseDto> ticketTypes;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
 }
