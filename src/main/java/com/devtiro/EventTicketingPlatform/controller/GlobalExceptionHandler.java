@@ -1,10 +1,7 @@
 package com.devtiro.EventTicketingPlatform.controller;
 
 import com.devtiro.EventTicketingPlatform.domain.dto.ErrorResponseDto;
-import com.devtiro.EventTicketingPlatform.exceptions.EventNotFoundException;
-import com.devtiro.EventTicketingPlatform.exceptions.EventUpdateException;
-import com.devtiro.EventTicketingPlatform.exceptions.TicketTypeNotFoundException;
-import com.devtiro.EventTicketingPlatform.exceptions.UserNotFoundException;
+import com.devtiro.EventTicketingPlatform.exceptions.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -200,6 +197,24 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorResponse, status);
+    }
+
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorResponseDto> handleQrCodeGenerationException(
+            QrCodeGenerationException ex, WebRequest request) {
+
+        log.error("Caught QrCodeGenerationException", ex);
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error("Unable to generate a QR code")
+                .message(ex.getMessage())
+                .errorCode(INTERNAL_SERVER_ERROR)
+                .path(extractPath(request))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String extractPath(WebRequest request) {

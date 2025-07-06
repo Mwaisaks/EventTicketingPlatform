@@ -164,6 +164,16 @@ return a Page instead of a list
 * Allow the user to specify other users as organisers
 * Add other exceptions
 * When the Organiser can be an attendee, staff for other events and vice versa
+* implementing QR codes in real world scenarios
+* Payment with Mpesa DARAJA API
+
+### Part 9
+**Implementing QR Codes**
+* removed id autogeneration
+* value made to be text instead of the default one varchar
+* added 2 Crossing dependencies; Google Zxing core and javase
+* Create a bean; QrCodeConfig class with bean QrCodeWriter
+* Inject the bean in QrCodeServiceImpl
 
 **Implementing an Endpoint**
 * Implement the service layer
