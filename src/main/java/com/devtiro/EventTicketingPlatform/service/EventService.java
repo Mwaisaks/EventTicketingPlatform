@@ -1,5 +1,6 @@
 package com.devtiro.EventTicketingPlatform.service;
 
+import com.devtiro.EventTicketingPlatform.domain.dto.request.UpdateEventRequest;
 import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequest;
 import org.springframework.data.domain.Page;
@@ -14,4 +15,6 @@ public interface EventService {
     Page<Event> listEventsForOrganizer (UUID organizerId, Pageable pageable);
 
     Optional<Event> getEventForOrganizer(UUID organizerId, UUID id);
+
+    Event updateEventForOrganizer(UUID organizerId, UUID id, UpdateEventRequest event);
 }

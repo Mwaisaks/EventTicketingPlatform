@@ -2,6 +2,22 @@ package com.devtiro.EventTicketingPlatform.exceptions;
 
 public class EventNotFoundException extends EventTicketException{
 
-    public EventNotFoundException(String format) {
+    public EventNotFoundException() {
+    }
+
+    public EventNotFoundException(String message) {
+        super(message);
+    }
+
+    public EventNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public EventNotFoundException(Throwable cause) {
+        super(cause);
+    }
+
+    public EventNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

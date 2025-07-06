@@ -1,5 +1,6 @@
 package com.devtiro.EventTicketingPlatform.service.impl;
 
+import com.devtiro.EventTicketingPlatform.domain.dto.request.UpdateEventRequest;
 import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.domain.entity.TicketType;
 import com.devtiro.EventTicketingPlatform.domain.entity.User;
@@ -71,17 +72,10 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findByIdAndOrganizerId(id, organizerId);
     }
 
-    /*
     @Override
-    public Event getEventForOrganizer(UUID eventId) {
-        Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new EventNotFoundException(
-                        String.format("Event with Id '%s' not found", eventId))
-                );
-
-        return event;
+    public Event updateEventForOrganizer(UUID organizerId, UUID id, UpdateEventRequest event) {
+        return null;
     }
 
-     */
 
 }

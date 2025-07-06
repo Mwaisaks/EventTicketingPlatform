@@ -2,6 +2,8 @@ package com.devtiro.EventTicketingPlatform.controller;
 
 import com.devtiro.EventTicketingPlatform.domain.dto.ErrorResponseDto;
 import com.devtiro.EventTicketingPlatform.exceptions.EventNotFoundException;
+import com.devtiro.EventTicketingPlatform.exceptions.EventUpdateException;
+import com.devtiro.EventTicketingPlatform.exceptions.TicketTypeNotFoundException;
 import com.devtiro.EventTicketingPlatform.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,17 +16,26 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@RestControllerAdvice //because we're building REST APIs, @ControllerAdvice is also fine
-@Slf4j //Allows us easy access to a logger
+@RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
-    //Generic Exception handler
+    // Error code constants
+    private static final String VALIDATION_ERROR = "VALIDATION_ERROR";
+    private static final String CONSTRAINT_VIOLATION = "CONSTRAINT_VIOLATION";
+    private static final String USER_NOT_FOUND = "USER_NOT_FOUND";
+    private static final String EVENT_NOT_FOUND = "EVENT_NOT_FOUND";
+    private static final String TICKET_TYPE_NOT_FOUND = "TICKET_TYPE_NOT_FOUND";
+    private static final String EVENT_UPDATE_FAILED = "EVENT_UPDATE_FAILED";
+    private static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+
+    // Generic Exception handler
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> handleException(
-            Exception ex, WebRequest request
-    ){
+            Exception ex, WebRequest request) {
 
         log.error("Caught Exception", ex);
 
@@ -33,7 +44,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .error("Internal Server Error")
                 .message("An unexpected error occurred")
-                .errorCode("INTERNAL_SERVER_ERROR")
+                .errorCode(INTERNAL_SERVER_ERROR)
                 .path(extractPath(request))
                 .build();
 
@@ -56,7 +67,7 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Validation Failed")
                 .message("Input validation constraints violated")
-                .errorCode("CONSTRAINT_VIOLATION")
+                .errorCode(CONSTRAINT_VIOLATION)
                 .path(extractPath(request))
                 .details(Map.of("violations", violations))
                 .build();
@@ -71,15 +82,15 @@ public class GlobalExceptionHandler {
         Map<String, String> fieldErrors = new HashMap<>();
         ex.getBindingResult().getFieldErrors()
                 .forEach(error ->
-                fieldErrors.put(error.getField(), error.getDefaultMessage())
-        );
+                        fieldErrors.put(error.getField(), error.getDefaultMessage())
+                );
 
         ErrorResponseDto errorResponse = ErrorResponseDto.builder()
                 .timeStamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Validation Failed")
                 .message("Invalid input data")
-                .errorCode("VALIDATION_ERROR")
+                .errorCode(VALIDATION_ERROR)
                 .path(extractPath(request))
                 .details(Map.of("fieldErrors", fieldErrors))
                 .build();
@@ -89,7 +100,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleUserNotFoundException(
-            UserNotFoundException ex, WebRequest request){
+            UserNotFoundException ex, WebRequest request) {
 
         log.error("User not found: {}", ex.getMessage());
 
@@ -98,9 +109,12 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("User Not Found")
                 .message(ex.getMessage())
-                .errorCode(ex.getErrorCode())
+                .errorCode(USER_NOT_FOUND)
                 .path(extractPath(request))
-                .details(Map.of("suggestedAction", "Register"))
+                .details(Map.of(
+                        "suggestedAction", "Register for a new account",
+                        "registrationEndpoint", "/auth/register"
+                ))
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
@@ -108,7 +122,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EventNotFoundException.class)
     public ResponseEntity<ErrorResponseDto> handleEventNotFoundException(
-            EventNotFoundException ex, WebRequest request){
+            EventNotFoundException ex, WebRequest request) {
 
         log.error("Event not found: {}", ex.getMessage());
 
@@ -117,16 +131,79 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.NOT_FOUND.value())
                 .error("Event Not Found")
                 .message(ex.getMessage())
-                .errorCode(ex.getErrorCode())
+                .errorCode(EVENT_NOT_FOUND)
                 .path(extractPath(request))
-                .details(Map.of("suggestedAction", "Go to Home Page"))
+                .details(Map.of(
+                        "suggestedAction", "Browse available events",
+                        "helpfulEndpoints", List.of("/events", "/events/search")
+                ))
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(TicketTypeNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleTicketTypeNotFoundException(
+            TicketTypeNotFoundException ex, WebRequest request) {
+
+        log.error("Caught TicketTypeNotFoundException", ex);
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.NOT_FOUND.value())
+                .error("Ticket Type Not Found")
+                .message(ex.getMessage())
+                .errorCode(TICKET_TYPE_NOT_FOUND)
+                .path(extractPath(request))
+                .details(Map.of(
+                        "suggestedAction", "View available ticket types for this event",
+                        "availableEndpoint", "/events/{eventId}/ticket-types"
+                ))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventUpdateException.class)
+    public ResponseEntity<ErrorResponseDto> handleEventUpdateException(
+            EventUpdateException ex, WebRequest request) {
+
+        log.error("Caught EventUpdateException", ex);
+
+        // Determine appropriate status based on exception details
+        HttpStatus status;
+        String errorCode;
+
+        if (ex.getCause() instanceof IllegalArgumentException) {
+            status = HttpStatus.BAD_REQUEST;
+            errorCode = "INVALID_EVENT_UPDATE";
+        } else if (ex.getMessage().toLowerCase().contains("business rule") ||
+                ex.getMessage().toLowerCase().contains("conflict")) {
+            status = HttpStatus.CONFLICT;
+            errorCode = "EVENT_UPDATE_CONFLICT";
+        } else {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+            errorCode = EVENT_UPDATE_FAILED;
+        }
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(status.value())
+                .error("Unable to update event")
+                .message(ex.getMessage())
+                .errorCode(errorCode)
+                .path(extractPath(request))
+                .details(Map.of(
+                        "suggestedAction", "Review event details and ensure all required fields are valid",
+                        "commonIssues", List.of("Event date in the past", "Invalid venue", "Ticket capacity exceeded")
+                ))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
     private String extractPath(WebRequest request) {
-        return request.getDescription(false)
-                .replace("uri=", "");
+        String description = request.getDescription(false);
+        return description.startsWith("uri=") ? description.substring(4) : description;
     }
 }
