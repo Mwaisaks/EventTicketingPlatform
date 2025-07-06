@@ -6,13 +6,13 @@ import com.devtiro.EventTicketingPlatform.domain.entity.Event;
 import com.devtiro.EventTicketingPlatform.domain.entity.TicketType;
 import com.devtiro.EventTicketingPlatform.domain.entity.User;
 import com.devtiro.EventTicketingPlatform.domain.dto.request.CreateEventRequest;
+import com.devtiro.EventTicketingPlatform.domain.enums.EventStatusEnum;
 import com.devtiro.EventTicketingPlatform.exceptions.EventNotFoundException;
 import com.devtiro.EventTicketingPlatform.exceptions.EventUpdateException;
 import com.devtiro.EventTicketingPlatform.exceptions.TicketTypeNotFoundException;
 import com.devtiro.EventTicketingPlatform.repository.EventRepository;
 import com.devtiro.EventTicketingPlatform.repository.UserRepository;
 import com.devtiro.EventTicketingPlatform.service.EventService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -146,5 +146,18 @@ public class EventServiceImpl implements EventService {
 
         }
         return eventRepository.save(existingEvent);
+    }
+
+    @Override
+    @Transactional
+    public void deleteEventForOrganizer(UUID organizerId, UUID id) {
+
+        getEventForOrganizer(organizerId, id).ifPresent(eventRepository::delete);
+
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
     }
 }

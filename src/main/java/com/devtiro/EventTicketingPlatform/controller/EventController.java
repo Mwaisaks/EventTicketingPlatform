@@ -21,6 +21,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -86,6 +87,16 @@ public class EventController {
         UpdateEventResponseDto updateEventResponseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
 
         return new ResponseEntity<>(updateEventResponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/{eventId}")
+    public ResponseEntity<Map<String, String>> deleteEvent(
+            @AuthenticationPrincipal Jwt jwt, @PathVariable UUID eventId
+    ){
+        UUID userId = parseUserId(jwt);
+
+        eventService.deleteEventForOrganizer(userId, eventId);
+        return ResponseEntity.ok(Map.of("message", "The event was deleted successfully"));
     }
 
     private UUID parseUserId(Jwt jwt){
