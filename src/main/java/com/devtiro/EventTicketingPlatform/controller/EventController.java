@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.devtiro.EventTicketingPlatform.util.JwtUtil.parseUserId;
+
 @RestController
 @RequestMapping(path = "/api/v1/events")
 @RequiredArgsConstructor
@@ -97,9 +99,5 @@ public class EventController {
 
         eventService.deleteEventForOrganizer(userId, eventId);
         return ResponseEntity.ok(Map.of("message", "The event was deleted successfully"));
-    }
-
-    private UUID parseUserId(Jwt jwt){
-        return UUID.fromString(jwt.getSubject());
     }
 }

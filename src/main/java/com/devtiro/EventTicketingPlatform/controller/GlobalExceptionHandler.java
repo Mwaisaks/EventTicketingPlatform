@@ -217,6 +217,42 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(TicketsSoldOutException.class)
+    public ResponseEntity<ErrorResponseDto> handleTicketsSoldOutException(
+            TicketsSoldOutException ex, WebRequest request) {
+
+        log.error("Caught TicketsSoldOutException", ex);
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Ticket sold out for this ticket type")
+                .message(ex.getMessage())
+                .errorCode("TICKETS_SOLD_OUT")
+                .path(extractPath(request))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QrCodeNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleQrCodeNotFoundException(
+            QrCodeNotFoundException ex, WebRequest request) {
+
+        log.error("Caught QrCodeNotFoundException", ex);
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error("Qr code not found.")
+                .message(ex.getMessage())
+                .errorCode(INTERNAL_SERVER_ERROR)
+                .path(extractPath(request))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     private String extractPath(WebRequest request) {
         String description = request.getDescription(false);
         return description.startsWith("uri=") ? description.substring(4) : description;
