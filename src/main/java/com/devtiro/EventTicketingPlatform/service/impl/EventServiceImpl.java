@@ -157,7 +157,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Page<Event> listPublishedEvents(Pageable pageable) {
-        return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
+        return eventRepository.findAll(pageable);
     }
 
     @Override

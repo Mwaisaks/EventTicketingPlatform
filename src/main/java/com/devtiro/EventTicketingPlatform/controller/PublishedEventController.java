@@ -8,6 +8,7 @@ import com.devtiro.EventTicketingPlatform.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,8 +34,8 @@ public class PublishedEventController {
             events = eventService.listPublishedEvents(pageable);
         }
 
-        return ResponseEntity.ok(
-                events.map(eventMapper::toListPublishedEventsResponseDto));
+        return new ResponseEntity<>(events.map(eventMapper::toListPublishedEventsResponseDto),
+                HttpStatus.OK);
     }
 
     @GetMapping(path = "/{eventId}")
@@ -46,4 +47,5 @@ public class PublishedEventController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
 }
