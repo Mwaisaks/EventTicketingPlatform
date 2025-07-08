@@ -27,6 +27,8 @@ public class PublishedEventController {
             @RequestParam(required = false) String q,
             Pageable pageable){
 
+        System.out.println("This controller method has been called.");
+
         Page<Event> events;
         if (null != q && !q.trim().isEmpty()){
             events = eventService.searchPublishedEvents(q, pageable);
@@ -42,6 +44,9 @@ public class PublishedEventController {
     public ResponseEntity<GetPublishedEventDetailsResponseDto> getPublishedEventDetails(
             @PathVariable UUID eventId
             ){
+
+        System.out.println("This controller method has been called.");
+
         return eventService.getPublishedEvent(eventId)
                 .map(eventMapper::toGetPublishedEventDetailsResponseDto)
                 .map(ResponseEntity::ok)

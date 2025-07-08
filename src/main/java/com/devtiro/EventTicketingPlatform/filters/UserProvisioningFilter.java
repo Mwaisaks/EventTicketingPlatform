@@ -45,8 +45,9 @@ public class UserProvisioningFilter extends OncePerRequestFilter {
 
                 userRepository.save(user);
             }
-
-            filterChain.doFilter(request, response);
         }
+
+        filterChain.doFilter(request, response);
+
     }
 }
