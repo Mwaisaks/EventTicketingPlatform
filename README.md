@@ -175,6 +175,14 @@ return a Page instead of a list
 * Create a bean; QrCodeConfig class with bean QrCodeWriter
 * Inject the bean in QrCodeServiceImpl
 
+
+### Part 10
+**Role Based Access**
+* Extracted the roles from jwts 
+Create a custom JWT converter in your config package; converts jwt to jwt authentication token
+* use the converter in your SecurityConfig.java file replace the `Customizer.withDefaults`
+* 
+
 **Implementing an Endpoint**
 * Implement the service layer
 * Create DTOs and mappers
