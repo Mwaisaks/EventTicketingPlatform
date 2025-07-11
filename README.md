@@ -181,7 +181,10 @@ return a Page instead of a list
 * Extracted the roles from jwts 
 Create a custom JWT converter in your config package; converts jwt to jwt authentication token
 * use the converter in your SecurityConfig.java file replace the `Customizer.withDefaults`
-* 
+
+**Lock Down Endpoints**
+Use requestMatchers...hasRole in SecurityConfig.java class
+When do we use hasAuthority?
 
 **Implementing an Endpoint**
 * Implement the service layer
