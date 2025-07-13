@@ -80,7 +80,7 @@ Copy each page description to the flow of UX pilot
 
 Edit any changes you need, save it to figma.
 
-Open a new figma deisgn file, open UX pilot plugin, add it to your design canvas
+Open a new figma design file, open UX pilot plugin, add it to your design canvas
 
 https://www.youtube.com/watch?v=Rl5pZ7Cncyk
 
@@ -105,16 +105,17 @@ We don't need them, used when doing server side rendering of our html pages
 * Initial configurations - create a realm 9name it your app's name
 * create a client (rep the FE)
 * Client authentication set to off to prevent public access
-* Create Users, set the passowrd in the credentials tab
-* Configure Springboot to keycloak; in the application.properties file
+* Create Users, set the password in the credentials tab
+* Configure SpringBoot to keycloak; in the application.properties file
 
 Is this what's used when you're in a system where you don't sign up, just log in with a preset password and then reset it?
 
 ### Configuring MapStruct
-In your pom.xml file specify the versions for mapstruct and lombok in teh properties section
-mapstruct version 1.6.3 goes well with lombok version 1.18.36
-in the maven compiler plugin add the three plugins in the order of lombok, processor and lombok-Mapstruct binding.
-
+* In your pom.xml file specify the versions for mapstruct and lombok in the properties section
+* mapstruct version 1.6.3 goes well with lombok version 1.18.36
+* in the maven compiler plugin add the three plugins in the order of lombok, processor and lombok-Mapstruct binding.
+* Create your Mapper class and use this annotation `@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+* `
 
 ## Part 4
 * Create Enums
@@ -166,6 +167,7 @@ return a Page instead of a list
 * When the Organiser can be an attendee, staff for other events and vice versa
 * implementing QR codes in real world scenarios
 * Payment with Mpesa DARAJA API
+* Add event in ListTicketResponseDto
 
 ### Part 9
 **Implementing QR Codes**
@@ -185,6 +187,11 @@ Create a custom JWT converter in your config package; converts jwt to jwt authen
 **Lock Down Endpoints**
 Use requestMatchers...hasRole in SecurityConfig.java class
 When do we use hasAuthority?
+
+**Pagination**
+* return a Page instead of List
+* pass in `Pageable pageable` in the controller, service and repository layers.
+
 
 **Implementing an Endpoint**
 * Implement the service layer
