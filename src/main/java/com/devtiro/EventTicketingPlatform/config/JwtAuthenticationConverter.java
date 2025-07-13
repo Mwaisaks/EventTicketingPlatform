@@ -30,6 +30,7 @@ public class JwtAuthenticationConverter implements Converter<Jwt, JwtAuthenticat
             return Collections.emptyList();
         }
 
+        //We may get a ClassCastException, if the something goes wrong and the payload is not what we expected it to be
         @SuppressWarnings("unchecked")
         List<String> roles = (List<String>) realmAccess.get("roles");
 

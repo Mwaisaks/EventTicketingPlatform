@@ -102,7 +102,7 @@ We don't need them, used when doing server side rendering of our html pages
 * Add configurations in the docker-compose.yml file
 * run docker-compose up.
 * head over to localhost:9090, and log in
-* Initial configurations - create a realm 9name it your app's name)
+* Initial configurations - create a realm 9name it your app's name
 * create a client (rep the FE)
 * Client authentication set to off to prevent public access
 * Create Users, set the passowrd in the credentials tab
@@ -120,7 +120,7 @@ in the maven compiler plugin add the three plugins in the order of lombok, proce
 * Create Enums
 * For the User Entity
 option 1:
-* have an abstract User class with various sub-classes - polymorphism (more complicated)
+* have an abstract User class with various subclasses - polymorphism (more complicated)
 option 2:
 * have different roles for these three user types and have one User entity
 
@@ -180,7 +180,7 @@ return a Page instead of a list
 **Role Based Access**
 * Extracted the roles from jwts 
 Create a custom JWT converter in your config package; converts jwt to jwt authentication token
-* use the converter in your SecurityConfig.java file replace the `Customizer.withDefaults`
+* use the converter in your SecurityConfig.java file, inject it in the arguments and replace the `Customizer.withDefaults`
 
 **Lock Down Endpoints**
 Use requestMatchers...hasRole in SecurityConfig.java class
