@@ -149,26 +149,6 @@ return a Page instead of a list
 
 #### Consistency is key in any codebase
 
-
-### Advanced Features
-* Integrate a payment System
-* Deploy on azure or AWS
-* Emails
-* Chatbot
-* Sign up page
-* Venue as it's own entity?
-* Start and end date to be repetitive, open at __ and close at __
-* Adjust docker-compose.yml and application.properties to prod standards
-* Soft Delete functionality; User deleted, events remain..
-* CSRF implementation
-* Make sure the end date is after the first date
-* Allow the user to specify other users as organisers
-* Add other exceptions
-* When the Organiser can be an attendee, staff for other events and vice versa
-* implementing QR codes in real world scenarios
-* Payment with Mpesa DARAJA API
-* Add event in ListTicketResponseDto
-
 ### Part 9
 **Implementing QR Codes**
 * removed id autogeneration
@@ -192,10 +172,37 @@ When do we use hasAuthority?
 * return a Page instead of List
 * pass in `Pageable pageable` in the controller, service and repository layers.
 
+**Ticket Validation**
+* Optimise the functionality for validating the ticket manually.
+* @Transactional for the changes that will be made in the database
+* You can optimise the security of the QR Code validation instead of just passing the qrCodeId.
 
 **Implementing an Endpoint**
 * Implement the service layer
 * Create DTOs and mappers
 * controller layer
 * test functionality
+
+### Advanced Features
+* Integrate a payment System
+* Deploy on azure or AWS
+* Emails
+* Chatbot
+* Sign up page
+* Venue as it's own entity?
+* Start and end date to be repetitive, open at __ and close at __
+* Adjust docker-compose.yml and application.properties to prod standards
+* Soft Delete functionality; User deleted, events remain..
+* CSRF implementation
+* Make sure the end date is after the first date
+* Allow the user to specify other users as organisers
+* Add other exceptions
+* When the Organiser can be an attendee, staff for other events and vice versa
+* implementing QR codes in real world scenarios
+* Payment with Mpesa DARAJA API
+* Add event in ListTicketResponseDto
+* Optimise the functionality for validating the ticket manually in production. You won't always have to manually enter ticketId.
+* Optimise the security of the QR Code validation instead of just passing the qrCodeId.
+* 
+
 

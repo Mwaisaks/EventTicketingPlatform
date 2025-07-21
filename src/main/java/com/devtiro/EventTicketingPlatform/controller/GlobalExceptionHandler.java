@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
     private static final String TICKET_TYPE_NOT_FOUND = "TICKET_TYPE_NOT_FOUND";
     private static final String EVENT_UPDATE_FAILED = "EVENT_UPDATE_FAILED";
     private static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+    private static final String TICKET_NOT_FOUND = "EVENT_NOT_FOUND";
 
     // Generic Exception handler
     @ExceptionHandler(Exception.class)
@@ -251,6 +252,24 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<ErrorResponseDto> handleTicketNotFoundException(
+            Exception ex, WebRequest request) {
+
+        log.error("Caught TicketNotFoundException", ex);
+
+        ErrorResponseDto errorResponse = ErrorResponseDto.builder()
+                .timeStamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Ticket not found")
+                .message(ex.getMessage())
+                .errorCode(TICKET_NOT_FOUND)
+                .path(extractPath(request))
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     private String extractPath(WebRequest request) {
